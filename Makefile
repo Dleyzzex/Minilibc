@@ -8,6 +8,7 @@
 DIR_SRC	=	./src/
 
 SRC		=	$(DIR_SRC)strlen.asm \
+			$(DIR_SRC)strchr.asm \
 
 NAME	=	libasm.so
 

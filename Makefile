@@ -9,6 +9,8 @@ DIR_SRC	=	./src/
 
 SRC		=	$(DIR_SRC)strlen.asm \
 			$(DIR_SRC)strchr.asm \
+			$(DIR_SRC)memset.asm \
+			$(DIR_SRC)memcpy.asm \
 
 NAME	=	libasm.so
 

@@ -11,8 +11,8 @@ strcmp:
 .loop:
         CMP     BYTE[RDI + R9], 0   ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RAX
         JE      die                 ; If ZF = 1 == if \0, Go to die
-        ;CMP     BYTE[RSI + R9], 0   ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RAX
-        ;JE      die
+        CMP     BYTE[RSI + R9], 0   ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RAX
+        JE      die
         MOV     R10B, BYTE[RSI+R9]  ; Move strb[n] of the second parameter to R10B
         MOV     AL, BYTE[RDI+R9]    ; Move stra[n] to RAX
         CMP     AL, R10B            ; Compare stra[n] with strb[n]
@@ -21,7 +21,7 @@ strcmp:
         JMP     .loop               ; Go to .loop - equivalent of a while
 
 not_equal:
-        SUB     AL, R10B            ; Do stra[n] - strb[n]
+        SUB     RAX, R10            ; Do stra[n] - strb[n]
         RET                         ; return RAX
 
 die:

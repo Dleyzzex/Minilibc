@@ -12,6 +12,8 @@ SRC		=	$(DIR_SRC)strlen.asm \
 			$(DIR_SRC)memset.asm \
 			$(DIR_SRC)memcpy.asm \
 			$(DIR_SRC)strcmp.asm \
+			$(DIR_SRC)memmove.asm \
+			$(DIR_SRC)strncmp.asm \
 
 NAME	=	libasm.so
 

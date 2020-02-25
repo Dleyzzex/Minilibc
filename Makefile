@@ -16,6 +16,9 @@ SRC		=	$(DIR_SRC)strlen.asm \
 			$(DIR_SRC)strncmp.asm \
 			$(DIR_SRC)strcasecmp.asm \
 			$(DIR_SRC)rindex.asm \
+			$(DIR_SRC)strstr.asm \
+			$(DIR_SRC)strpbrk.asm \
+			$(DIR_SRC)strcspn.asm \
 
 NAME	=	libasm.so
 

@@ -9,8 +9,7 @@ strpbrk:
 .loopA:
         CMP     BYTE[RAX], 0
         JE      .leave
-        MOV     R10, RSI
-        XOR R10, R10
+        XOR     R10, R10
 
 .loopB:
         MOV     R11B, BYTE[RSI + R10]
@@ -25,7 +24,7 @@ strpbrk:
         INC     RAX
         JMP     .loopA
 
-.leave
+.leave:
         XOR     RAX, RAX
         RET
 

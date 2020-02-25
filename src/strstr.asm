@@ -4,38 +4,32 @@ GLOBAL strstr                   ; export "strstr"
 SECTION .text
 
 strstr:
-        MOV     RAX, RDI        ; Set RAX equal to the ptr of RDI -> first parameter
-        XOR     R10, R10
-.loop:
-        CMP     BYTE[RAX], 0    ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RAX
-        JE      die             ; If ZF = 1 == if \0, Go to die
+        MOV     RAX, RDI
 
-        MOV     R10, RAX
-        MOV     R11, RSI
-        JMP     .check          ; Go to .loop - equivalent of a while
-
-        INC     RAX             ; Icrement by 1 RAX
-        JMP     .loop           ; Go to .loop - equivalent of a while
-
-.check:
-        CMP     BYTE[RAX], 0    ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RAX
-        JE      .stop           ; If ZF = 1 == if \0, Go to die
-        CMP     BYTE[R11], AL   ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RAX
-        JNE     .stop
-        CMP     BYTE[R11], 0    ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RAX
-        JE      find            ; If ZF = 1 == if \0, Go to die
-        INC     R11
+.loopA:
+        CMP     BYTE[RAX], 0
+        JE      die
+        MOV     R11, RAX
+        MOV     R10, RSI
+        JMP     .loopA
         INC     RAX
-        JMP     .check
+        JMP     .loopB
 
-.stop:
-        MOV     RAX, R10
-        INC     RAX
-        JMP     .loop
+.loopB:
+        CMP     BYTE[R10], 0
+        JE      .find
+        CMP     BYTE[R10], AL
+        JNE     .not_equal
+        INC     R10
+        JMP     .loopB
 
-find:
-        MOV     RAX, R10
-        JMP     die
+.not_equal:
+        MOV     RAX, R11
+        JMP     .loopA
+
+.find:
+        MOV     RAX, R11
+        RET
 
 die:
-        RET                   ; return RAX
+        RET                     ; return RAX

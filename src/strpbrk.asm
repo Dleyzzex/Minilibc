@@ -3,24 +3,31 @@ GLOBAL strpbrk                  ; export "strpbrk"
 
 SECTION .text
 
-strchr:
+strpbrk:
         MOV     RAX, RDI
 
 .loopA:
         CMP     BYTE[RAX], 0
-        JE      die
+        JE      .leave
         MOV     R10, RSI
-        JMP     .loopA
-        INC     RAX
-        JMP     .loopB
+        XOR R10, R10
 
 .loopB:
-        CMP     BYTE[R10], 0
-        JE      .loopA
-        CMP     BYTE[R10], AL
+        MOV     R11B, BYTE[RSI + R10]
+        CMP     R11B, 0
+        JE      .not_found
+        CMP     BYTE[RAX], R11B
         JE      die
         INC     R10
         JMP     .loopB
+
+.not_found:
+        INC     RAX
+        JMP     .loopA
+
+.leave
+        XOR     RAX, RAX
+        RET
 
 die:
         RET                     ; return RAX

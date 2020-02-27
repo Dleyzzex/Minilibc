@@ -13,7 +13,7 @@ strchr:
         INC     RAX             ; Icrement by 1 RAX
         JMP     .loop           ; Go to .loop - equivalent of a while
 
-.null_ptr
+.null_ptr:
         CMP     BYTE[RAX], SIL  ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RAX
         JE      die
         XOR     RAX, RAX

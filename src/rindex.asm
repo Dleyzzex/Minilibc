@@ -4,26 +4,26 @@ GLOBAL rindex                   ; export "rindex"
 SECTION .text
 
 rindex:
-        MOV     RAX, RDI        ; Set RAX to 0, RAX is the return value
-        XOR     R11, R11
+        XOR     RAX, RAX
 .loop:
-        CMP     BYTE[RAX], 0      ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RDI (ptr of the char *) + RAX
-        JE      .null_ptr         ; If ZF = 1 == if \0, Go to die
-        CMP     BYTE[RAX], SIL    ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RDI (ptr of the char *) + RAX
+        CMP     BYTE[RDI], SIL    ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RDI (ptr of the char *) + RAX
         JE      .save_value
-        INC     RAX                     ; Icrement by 1 RAX
+        CMP     BYTE[RDI], 0      ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RDI (ptr of the char *) + RAX
+        JE      .null_ptr         ; If ZF = 1 == if \0, Go to die
+        INC     RDI                     ; Icrement by 1 RAX
         JMP     .loop                   ; Go to strlen - equivalent of a while
 
 .save_value:
-        MOV     R11, RAX
-        INC     RAX                     ; Icrement by 1 RAX
+        MOV     RAX, RDI
+        CMP     BYTE[RDI], 0      ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RDI (ptr of the char *) + RAX
+        JE      .null_ptr         ; If ZF = 1 == if \0, Go to die
+        INC     RDI                     ; Icrement by 1 RAX
         JMP     .loop                   ; Go to strlen - equivalent of a while
 
-.null_ptr
-        CMP     BYTE[RAX], SIL  ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RAX
+.null_ptr:
+        CMP     BYTE[RDI], SIL  ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RAX
         JE      die
         XOR     RAX, RAX
 
 die:
-        MOV     RAX, R11
         RET                     ; return RAX

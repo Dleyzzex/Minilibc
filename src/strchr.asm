@@ -4,8 +4,6 @@ GLOBAL strchr                   ; export "strchr"
 SECTION .text
 
 strchr:
-        CMP     BYTE[RAX], 0    ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RAX
-        JE      .null_ptr
         MOV     RAX, RDI        ; Set RAX equal to the ptr of RDI -> first parameter
 .loop:
         CMP     BYTE[RAX], 0    ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RAX
@@ -17,7 +15,6 @@ strchr:
 
 .null_ptr
         XOR     RAX, RAX
-        JMP     die
 
 die:
         RET                     ; return RAX

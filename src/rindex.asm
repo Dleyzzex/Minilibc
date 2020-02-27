@@ -8,7 +8,7 @@ rindex:
         XOR     R11, R11
 .loop:
         CMP     BYTE[RAX], 0      ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RDI (ptr of the char *) + RAX
-        JE      die                     ; If ZF = 1 == if \0, Go to die
+        JE      .null_ptr         ; If ZF = 1 == if \0, Go to die
         CMP     BYTE[RAX], SIL    ; The ZF flag is set according to the result, 1 if equal, 0 if not, BYTE convert to char : RDI (ptr of the char *) + RAX
         JE      .save_value
         INC     RAX                     ; Icrement by 1 RAX
@@ -18,6 +18,10 @@ rindex:
         MOV     R11, RAX
         INC     RAX                     ; Icrement by 1 RAX
         JMP     .loop                   ; Go to strlen - equivalent of a while
+
+.null_ptr
+        XOR     RAX, RAX
+        JMP     die
 
 die:
         MOV     RAX, R11

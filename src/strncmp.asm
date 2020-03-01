@@ -30,4 +30,5 @@ not_equal:
         RET                         ; return RAX
 
 die:
+        XOR     RAX, RAX
         RET                             ; return RAX

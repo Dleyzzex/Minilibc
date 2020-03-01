@@ -5,6 +5,9 @@ SECTION .text
 
 strstr:
         MOV     RAX, RDI
+        MOV     R9, RAX
+        XOR     R10, R10        ; index
+        JMP     .loopB
 
 .loopA:
         MOV     R9, RAX
